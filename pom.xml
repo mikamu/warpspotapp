@@ -75,15 +75,15 @@
 			<artifactId>dropwizard-client</artifactId>
 			<version>${dropwizard.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.nimbusds</groupId>
-			<artifactId>oauth2-oidc-sdk</artifactId>
-			<version>${connect2id.version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.webjars</groupId>
-		    <artifactId>bootstrap</artifactId>
-		    <version>3.3.2-1</version>
-		</dependency>		
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.nimbusds</groupId> -->
+<!-- 			<artifactId>oauth2-oidc-sdk</artifactId> -->
+<!-- 			<version>${connect2id.version}</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 		    <groupId>org.webjars</groupId> -->
+<!-- 		    <artifactId>bootstrap</artifactId> -->
+<!-- 		    <version>3.3.2-1</version> -->
+<!-- 		</dependency>		 -->
 	</dependencies>	
 </project>

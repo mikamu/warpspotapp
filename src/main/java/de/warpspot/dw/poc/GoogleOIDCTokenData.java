@@ -2,6 +2,7 @@ package de.warpspot.dw.poc;
 
 import java.io.IOException;
 import java.util.Base64;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +37,34 @@ public class GoogleOIDCTokenData {
 		decodeIdToken();
 	}
 
+	public String getBearerToken() {
+		return this.bearerToken;
+	}
+	
+	public int getExpiresIn() {
+		return this.expiresIn;
+	}
+
+	public String getEmail() {
+		return getStringVal("email");
+	}
+	
+	public boolean getEmailVerified() {
+		return getVal("email_verified").map(v -> v.asBoolean()).orElse(false);
+	}
+	
+	public Optional<JsonNode> getVal(final String pKey) {
+		return Optional.ofNullable(this.rawPayloadData.get(pKey));
+	}
+	
+	public String getStringVal(final String pKey) {
+		return getVal(pKey).map(v -> v.asText()).orElse(null);
+	}
+	
+	public int getIntVal(final String pKey) {
+		return getVal(pKey).map(v -> v.asInt()).orElse(-1);
+	}
+	
 	private void decodeIdToken() {
 		if (this.rawIdToken == null) {
 			throw new IllegalArgumentException("Tokendaten enthalten kein IdToken!");

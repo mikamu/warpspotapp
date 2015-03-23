@@ -12,11 +12,22 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="page-header">
-<h2>Login With Google-Button</h2>
-</div>
+{{#tokenData}}
 <div>
-Hier ist der Link: <a class="btn btn-lg btn-danger" href="" role="button">Login mit Google...</a>
+<h2>Erfolgreich via Google angemeldet!</h2>
+<table class="table table-condensed">
+<tr><td>Bearer-Token:</td><td class="success">{{tokenData.bearerToken}}</td></tr>
+<tr><td>Email:</td><td class="success">{{tokenData.email}}</td></tr>
+<tr><td>Email is verified:</td><td class="success">{{tokenData.emailVerified}}</td></tr>
+</table>
 </div>
+{{/tokenData}}
+{{^tokenData}}
+<div>
+<h3>Problem beim OAuth-Anmeldeprozess</h3>
+<span class="label label-danger">Bearer-Token konnte nicht beschafft werden. Irgendwas ist
+beim OAuth-Anmeldeprozess schiefgelaufen</span>
+</div>
+{{/tokenData}}
 </body>
 </html>

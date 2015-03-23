@@ -28,7 +28,6 @@ public class GoogleOIDC {
 	
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	private final GoogleOIDCProps props;
-	private GoogleOIDCTokenData tokenData;
 	
 	public static void init(final GoogleOIDCProps pProps) {
 		GoogleOIDC._globalProps = pProps;
@@ -81,8 +80,8 @@ public class GoogleOIDC {
 			HttpEntity respBody = resp.getEntity();
 			final JsonNode tokenData = new ObjectMapper().readTree(respBody.getContent());
 			EntityUtils.consume(respBody);
-			this.tokenData = new GoogleOIDCTokenData(tokenData);
-			return this.tokenData;
+			final GoogleOIDCTokenData googleTokenData = new GoogleOIDCTokenData(tokenData);
+			return googleTokenData;
 		} catch (ClientProtocolException cpEx) {
 			logger.error("Problem bei der Anfrage an den Token-Endpoint: ", cpEx);
 		} catch (IOException ioEx) {

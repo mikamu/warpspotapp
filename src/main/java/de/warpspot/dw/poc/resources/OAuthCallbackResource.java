@@ -8,6 +8,7 @@ import javax.ws.rs.QueryParam;
 import org.apache.http.client.HttpClient;
 
 import de.warpspot.dw.poc.GoogleOIDC;
+import de.warpspot.dw.poc.GoogleOIDCTokenData;
 import de.warpspot.dw.poc.core.ServiceRegistry;
 import de.warpspot.dw.poc.managed.CSRFTokenManager;
 import de.warpspot.dw.poc.managed.HttpClientProvider;
@@ -17,7 +18,7 @@ import de.warpspot.dw.poc.views.LoginWithGoogleResultView;
 @Produces("text/html; charset=utf-8")
 public class OAuthCallbackResource {
 
-	final GoogleOIDC googleOICD;
+	private final GoogleOIDC googleOICD;
 	
 	public OAuthCallbackResource() {
 		this.googleOICD = GoogleOIDC.newOIDC();
@@ -25,12 +26,13 @@ public class OAuthCallbackResource {
 	
 	@GET
 	public LoginWithGoogleResultView callback(@QueryParam("code") String pCode, @QueryParam("state") String pState) {
+		GoogleOIDCTokenData tokenData = null;
 		final boolean stateIsValid = validateState(pState);
 		if (stateIsValid) {
-			this.googleOICD.retrieveTokenDataForCode(pCode, getHttpClient());
+			tokenData = this.googleOICD.retrieveTokenDataForCode(pCode, getHttpClient());
 		}
 		
-		return new LoginWithGoogleResultView();
+		return new LoginWithGoogleResultView(tokenData);
 	}
 
 	private boolean validateState(final String pState) {
